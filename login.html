@@ -4,48 +4,70 @@
     <title>Login</title>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Login</div>
                     <div class="card-body">
                         <form id="loginForm" onsubmit="return validateLogin()">
                             <div class="form-group">
-                                <label for="email">Email address</label>
+                                <label for="email" class="form-label">Email address</label>
                                 <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
                             </div>
                             <div class="form-group">
-                                <label for="password">Password</label>
+                                <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
                             </div>
-                            <button type="submit" class="btn btn-primary">Login</button>
+                            <button type="submit" class="btn btn-primary custom-btn">Login</button>
                         </form>
+                        <div id="alert-danger" class="alert alert-danger"></div>
                     </div>
                 </div>
-                <div class="mt-3">
-                    <p>Don't have an account? <a href="register.html">Register</a></p>
+                <div class="mt-3 text-center">
+                    <p>Don't have an account? <a href="register.html" class="custom-link">Register</a></p>
+                </div>
+                <!-- Display registration success message here -->
+                <div id="registration-success" class="alert alert-success" style="display: none;">
+                    Registration successful! You can now log in.
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Include Bootstrap JS (optional) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         function validateLogin() {
-            // Add your login validation logic here
             var email = document.getElementById('email').value;
             var password = document.getElementById('password').value;
 
-            // You can add custom validation code here, e.g., checking credentials against a database.
+            var alertDanger = document.getElementById('alert-danger');
 
-            // For this example, always return true to submit the form.
-            return true;
+            // You should implement your login validation logic here.
+            // For this example, we're assuming a simple email and password check.
+            if (email === "user@example.com" && password === "password") {
+                // Login successful, you can redirect the user to another page here.
+                alertDanger.style display = 'none';
+                alert("Login successful!"); // You can replace this with your own logic.
+                return false;
+            } else {
+                alertDanger.style.display = 'block';
+                alertDanger.innerHTML = 'Invalid email or password.';
+                return false;
+            }
+        }
+
+        // Function to display the registration success message
+        function showRegistrationSuccess() {
+            var registrationSuccess = document.getElementById('registration-success');
+            registrationSuccess.style.display = 'block';
+        }
+
+        // Check for the "registrationSuccess" query parameter in the URL
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has("registrationSuccess")) {
+            showRegistrationSuccess();
         }
     </script>
 </body>
